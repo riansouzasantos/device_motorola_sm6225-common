@@ -246,9 +246,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@4.1.vendor
 
-# Lineage Health
+# Lights
 PRODUCT_PACKAGES += \
-    vendor.lineage.health-service.default
+    android.hardware.lights-service.bengal
 
 # Media
 PRODUCT_PACKAGES += \
