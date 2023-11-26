@@ -106,6 +106,7 @@ dalvik.vm.heapmaxfree=8m
 # Display
 debug.sf.auto_latch_unsignaled=true
 debug.sf.disable_client_composition_cache=1
+debug.renderengine.backend=skiaglthreaded
 debug.cpurend.vsync=false
 debug.performance.tuning=1
 debug.sf.enable_hwc_vds=1
