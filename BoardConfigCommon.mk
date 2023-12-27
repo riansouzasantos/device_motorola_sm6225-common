@@ -91,50 +91,32 @@ BOARD_KERNEL_CMDLINE := \
     msm_rtb.filter=0x237 \
     service_locator.enable=1 \
     swiotlb=2048
-BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_KERNEL_PAGESIZE := 4096
-BOARD_KERNEL_SEPARATED_DTBO := true
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
-TARGET_KERNEL_CONFIG := vendor/bengal-perf_defconfig vendor/debugfs.config vendor/ext_config/moto-bengal.config
-TARGET_KERNEL_SOURCE := kernel/motorola/sm6225
 
-# Kernel Modules - Audio
-TARGET_MODULE_ALIASES += \
-    adsp_loader_dlkm.ko:audio_adsp_loader.ko \
-    apr_dlkm.ko:audio_apr.ko \
-    bolero_cdc_dlkm.ko:audio_bolero_cdc.ko \
-    machine_dlkm.ko:audio_machine_bengal.ko \
-    mbhc_dlkm.ko:audio_mbhc.ko \
-    native_dlkm.ko:audio_native.ko \
-    pinctrl_lpi_dlkm.ko:audio_pinctrl_lpi.ko \
-    platform_dlkm.ko:audio_platform.ko \
-    pm2250_spmi_dlkm.ko:audio_pm2250_spmi.ko \
-    q6_dlkm.ko:audio_q6.ko \
-    q6_notifier_dlkm.ko:audio_q6_notifier.ko \
-    q6_pdr_dlkm.ko:audio_q6_pdr.ko \
-    rouleur_dlkm.ko:audio_rouleur.ko \
-    rouleur_slave_dlkm.ko:audio_rouleur_slave.ko \
-    rx_macro_dlkm.ko:audio_rx_macro.ko \
-    snd_event_dlkm.ko:audio_snd_event.ko \
-    aw882xx_dlkm.ko:audio_snd_soc_aw882xx.ko \
-    stub_dlkm.ko:audio_stub.ko \
-    swr_dlkm.ko:audio_swr.ko \
-    swr_ctrl_dlkm.ko:audio_swr_ctrl.ko \
-    tx_macro_dlkm.ko:audio_tx_macro.ko \
-    usf_dlkm.ko:audio_usf.ko \
-    va_macro_dlkm.ko:audio_va_macro.ko \
-    wcd937x_dlkm.ko:audio_wcd937x.ko \
-    wcd937x_slave_dlkm.ko:audio_wcd937x_slave.ko \
-    wcd9xxx_dlkm.ko:audio_wcd9xxx.ko \
-    wcd_core_dlkm.ko:audio_wcd_core.ko \
-    wsa881x_analog_dlkm.ko:audio_wsa881x_analog.ko
+# QCOM
+ifeq ($(PRODUCT_USES_QCOM_HARDWARE),true)
+  include $(COMMON_PATH)/hardware/qcom/board.mk
+endif
+TARGET_USES_HARDWARE_QCOM_GPS := false
 
-# Kernel Modules - WLAN
-TARGET_MODULE_ALIASES += \
-    wlan.ko:qca_cld3_wlan.ko
+### Kernel Modules
+ifneq ($(TARGET_PREBUILT_KERNEL),)
+  BOARD_VENDOR_KERNEL_MODULES ?= \
+      $(wildcard device/motorola/$(PRODUCT_DEVICE)-kernel/modules/*.ko)
+endif
 
-# Partitions
--include vendor/lineage/config/BoardConfigReservedSize.mk
+# Kernel
+BOARD_FLASH_BLOCK_SIZE ?= 131072
+BOARD_KERNEL_IMAGE_NAME ?= kernel
+ifneq ($(BOARD_USES_DTBO),false)
+  BOARD_DTBOIMG_PARTITION_SIZE ?= 25165824
+  BOARD_KERNEL_SEPARATED_DTBO := true
+  ifneq ($(TARGET_PREBUILT_KERNEL),)
+    BOARD_PREBUILT_DTBIMAGE_DIR ?= device/motorola/$(PRODUCT_DEVICE)-kernel/dtbs
+    BOARD_PREBUILT_DTBOIMAGE ?= device/motorola/$(PRODUCT_DEVICE)-kernel/dtbo.img
+  endif
+endif
 
 BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_USES_METADATA_PARTITION := true
@@ -162,7 +144,6 @@ TARGET_COPY_OUT_SYSTEM_EXT := system_ext
 TARGET_COPY_OUT_VENDOR := vendor
 
 # Platform
-BOARD_USES_QCOM_HARDWARE := true
 TARGET_BOARD_PLATFORM := bengal
 
 BOARD_ROOT_EXTRA_SYMLINKS := \
