@@ -100,27 +100,6 @@ ifeq ($(PRODUCT_USES_QCOM_HARDWARE),true)
 endif
 TARGET_USES_HARDWARE_QCOM_GPS := false
 
-### Kernel Modules
-ifneq ($(TARGET_PREBUILT_KERNEL),)
-  BOARD_VENDOR_KERNEL_MODULES ?= \
-      $(wildcard device/motorola/$(PRODUCT_DEVICE)-kernel/modules/*.ko)
-endif
-
-# Kernel
-BOARD_FLASH_BLOCK_SIZE ?= 131072
-BOARD_KERNEL_IMAGE_NAME ?= kernel
-ifneq ($(BOARD_USES_DTBO),false)
-  BOARD_DTBOIMG_PARTITION_SIZE ?= 25165824
-  BOARD_KERNEL_SEPARATED_DTBO := true
-  ifneq ($(TARGET_PREBUILT_KERNEL),)
-    BOARD_PREBUILT_DTBIMAGE_DIR ?= device/motorola/$(PRODUCT_DEVICE)-kernel/dtbs
-    BOARD_PREBUILT_DTBOIMAGE ?= device/motorola/$(PRODUCT_DEVICE)-kernel/dtbo.img
-  endif
-endif
-
-# Kernel
-PRODUCT_VENDOR_KERNEL_HEADERS := $(PLATFORM_COMMON_PATH)-kernel/kernel-headers
-
 BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_USES_METADATA_PARTITION := true
 
