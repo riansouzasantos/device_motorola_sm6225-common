@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Copyright (c) 2012-2016, The Linux Foundation. All rights reserved
+<!--Copyright (c) 2012-2016, The Linux Foundation. All rightss reserved
 
     Not a Contribution.
 
     Licensed under the Apache License, Version 2.0 (the "License"); you
     may not use this file except in compliance with the License.  You may
     obtain a copy of the License at
-s
     http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
@@ -62,7 +61,7 @@ s
     <bool name="config_unplugTurnsOnScreen">true</bool>
 
     <!-- Boolean indicating if restoring network selection should be skipped -->
-    <!-- The restoring is handled by modem if it is true-->
+    <!-- The restoring is handled by modem if it is true-->s
     <bool translatable="false" name="skip_restoring_network_selection">true</bool>
 
     <!-- Is the device capable of hot swapping an ICC Card -->
